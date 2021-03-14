@@ -5,6 +5,7 @@ public class BalancedTree{
     public BalancedTree(){}
 
 
+    // update key according to equal biggest key of its children
     private void updateKey(Node node){
         node.size = 0;
 
@@ -28,6 +29,7 @@ public class BalancedTree{
     }
 
 
+    // set the children of a parent node
     private void setChildren(Node parentNode , Node l, Node m, Node r){
         parentNode.l = l;
         parentNode.m = m;
@@ -41,6 +43,7 @@ public class BalancedTree{
     }
 
 
+    // used to insert a new leaf
     private Node insertAndSplit(Node parentNode, Node newNode){
         if (parentNode.r == null){ // if parent has 2 children
             if(newNode.key.compareTo(parentNode.l.key) < 0)
@@ -77,6 +80,7 @@ public class BalancedTree{
     }
 
 
+    // insert to tree
     public void insert(Key newKey, Value newValue){
         Node newLeaf = new Node(newKey, newValue);
         if (root == null){ // tree is empty
@@ -112,7 +116,7 @@ public class BalancedTree{
     }
 
 
-    // used in case we have a node with a single child
+    // used to delete a node in case we have a parent-node with a single child
     public Node borrowOrMerge(Node currentNode){
         Node parent = currentNode.parent;
         // current is the left child
@@ -164,6 +168,7 @@ public class BalancedTree{
     }
 
 
+    // delete leaf from tree
     public void delete(Key key){
 
         Node nodeToDelete = findLeaf(searchParent(key), key);
@@ -203,7 +208,7 @@ public class BalancedTree{
     }
 
 
-    // find the parent of the leaf or parent where leaf should be inserted
+    // find the parent of existing leaf or parent where a new leaf should be inserted
     public Node downwardSearch(Key key) {
         Node currentNode = root;
         while (currentNode.l != null) {
@@ -222,6 +227,7 @@ public class BalancedTree{
     }
 
 
+    // search for the parent of a key using function downwardSearch
     public Node searchParent(Key key){
         if (root == null) return null; // tree is empty
 
@@ -237,6 +243,8 @@ public class BalancedTree{
         }
     }
 
+
+    // get the lead with a given key of a given parent if exists
     public Node findLeaf(Node parent, Key key){
         if (parent == null) return null;
 
@@ -253,6 +261,7 @@ public class BalancedTree{
     }
 
 
+    // get a leaf with a given key
     public Value search(Key key){
         Node leaf = findLeaf(searchParent(key), key);
         if (leaf == null) return null;
@@ -260,6 +269,7 @@ public class BalancedTree{
     }
 
 
+    // get the rank (order statistic) of the given key
     public int rank(Key key){
         Node child = findLeaf(searchParent(key), key);
         if(child == null) return 0;
@@ -281,6 +291,7 @@ public class BalancedTree{
     }
 
 
+    // get the key of a lead in a given index
     public Key select(int index){
         if(root == null || root.size < index || index < 1)
             return null;
@@ -312,6 +323,7 @@ public class BalancedTree{
     }
 
 
+    // find the biggest key which is less or equal to the given key
     public Node findLowerBound(Key key){
 
         if (root.key.compareTo(key) < 0) return null;
@@ -341,6 +353,7 @@ public class BalancedTree{
     }
 
 
+    // find the smallest key which is more or equal to the given key
     public Node findUpperBound(Key key){
 
         if (key.compareTo(minKey()) < 0) return null;
@@ -366,6 +379,7 @@ public class BalancedTree{
     }
 
 
+    // get the smallest key in the tree
     public Key minKey(){
         if (root == null)
             return null;
@@ -378,6 +392,7 @@ public class BalancedTree{
     }
 
 
+    // sums the all values within the interval of keys
     public Value sumValuesInInterval(Key key1, Key key2){
 
         if(root == null) return null;
